@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Corpora and caches (fetch with `python download_data.py --prepare`)
+data/raw/*
+!data/raw/.gitkeep
+data/cache/
+
+# Trained runs: weights and per-run outputs are published as release assets;
+# metrics, configs and figures are copied into reports/ for the README
+/runs/
+*.log
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

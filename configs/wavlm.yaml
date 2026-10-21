@@ -1,0 +1,21 @@
+# Frozen WavLM-Large statistics (all 25 layers, mean + std over time) + layer-weighted MLP head.
+# Head hyper-parameters chosen on dev out-of-fold UAR (reports/model_selection.md, rounds 1-2):
+# the head over-fits frozen features fast, so training is short and dropout strong.
+base: base.yaml
+name: wavlm
+
+model:
+  name: ssl_head
+  ssl:
+    backbone: microsoft/wavlm-large
+    hidden_dim: 256
+    dropout: 0.5
+    input_dropout: 0.3
+
+train:
+  batch_size: 128
+  eval_batch_size: 512
+  epochs: 10
+  learning_rate: 0.001
+  weight_decay: 0.05
+  warmup_epochs: 2.0

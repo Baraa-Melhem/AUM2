@@ -1,0 +1,15 @@
+# The 2023 notebook's method (features, five CNNs, cascade, training recipe) re-run on the
+# leak-free speaker-independent protocol. See src/aum2/models/legacy.py.
+base: base.yaml
+name: legacy
+
+model:
+  name: legacy_cascade
+  legacy:
+    n_mels: 128
+    n_fft: 2048
+    hop_length: 512
+    image_size: 128
+    epochs: [10, 7, 10, 10, 10]
+    batch_sizes: [32, 35, 25, 25, 25]
+    learning_rate: 0.001

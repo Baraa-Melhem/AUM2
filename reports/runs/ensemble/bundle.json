@@ -1,0 +1,26 @@
+{
+  "family": "ensemble",
+  "classes": [
+    "angry",
+    "disgust",
+    "fear",
+    "happy",
+    "neutral",
+    "sad"
+  ],
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "members": [
+    "wavlm",
+    "hubert"
+  ],
+  "weights": [
+    0.45,
+    0.55
+  ]
+}

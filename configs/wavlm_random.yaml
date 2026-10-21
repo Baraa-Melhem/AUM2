@@ -1,0 +1,6 @@
+# The WavLM head under the 2023 random utterance-level split, to measure the speaker-leak inflation.
+base: wavlm.yaml
+name: wavlm_random
+
+split:
+  protocol: random

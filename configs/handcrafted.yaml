@@ -1,0 +1,15 @@
+# Classical baseline: 1 024 acoustic functionals (MFCC + deltas, chroma, contrast, spectral
+# shape, ZCR, RMS, F0) -> standardisation fitted on the training fold -> LightGBM.
+# LightGBM (31 leaves) beat the best logistic regression (C = 0.002) on dev OOF UAR,
+# 0.536 vs 0.511; see reports/model_selection.md.
+base: base.yaml
+name: handcrafted
+
+model:
+  name: handcrafted
+  handcrafted:
+    classifier: lightgbm
+    n_mfcc: 40
+    lgbm_estimators: 800
+    lgbm_learning_rate: 0.03
+    lgbm_num_leaves: 31

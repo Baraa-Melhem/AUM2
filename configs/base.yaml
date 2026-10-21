@@ -1,0 +1,48 @@
+# Shared defaults. Every experiment file names this one as `base` and overrides what differs.
+# All values are validated against the dataclasses in src/aum2/config.py; unknown keys fail.
+
+seed: 0
+output_dir: runs
+
+data:
+  raw_dir: data/raw
+  cache_dir: data/cache
+  corpora: [cremad, ravdess, tess, savee]
+  classes: [angry, disgust, fear, happy, neutral, sad]
+  sample_rate: 16000      # one rate for every corpus (they ship at 16, 24.4, 44.1 and 48 kHz)
+  trim_top_db: 35.0       # edge silence quieter than (loudest frame - 35 dB) is trimmed
+  trim_margin_ms: 100.0
+  target_dbfs: -25.0      # RMS loudness normalisation; recording gain is not an emotion cue
+  max_seconds: 8.0
+  min_seconds: 0.3
+
+split:
+  protocol: speaker       # held-out test speakers + speaker-disjoint dev folds
+  test_fraction: 0.2
+  n_folds: 5
+  seed: 1337              # independent of `seed`, so every experiment shares one split
+
+frontend:
+  n_mels: 80
+  n_fft: 400              # 25 ms
+  win_length: 400
+  hop_length: 160         # 10 ms
+  f_min: 20.0
+  f_max: 8000.0
+
+train:
+  batch_size: 64
+  eval_batch_size: 64
+  epochs: 60
+  learning_rate: 0.002
+  weight_decay: 0.05
+  warmup_epochs: 2.0
+  loss: ce
+  label_smoothing: 0.1
+  class_weighting: balanced
+  grad_clip: 5.0
+  ema_decay: 0.999
+  patience: 0             # 0 = train the full cosine schedule, no epoch picked on val
+  amp: true
+  device: auto
+  deterministic: false

@@ -1,0 +1,29 @@
+# Log-mel CRNN trained from scratch with on-the-fly GPU augmentation.
+base: base.yaml
+name: crnn
+
+model:
+  name: crnn
+  crnn:
+    channels: [32, 64, 128, 256]
+    time_pool: [2, 2, 2, 1]     # 10 ms frames -> 80 ms steps into the GRU
+    proj_dim: 256
+    gru_hidden: 128
+    gru_layers: 2
+    attention_dim: 128
+    dropout: 0.3
+
+augment:
+  enabled: true
+  crop_seconds: 3.0
+  gain_db: 6.0
+  noise_prob: 0.5
+  snr_db: [10.0, 35.0]
+  tempo_prob: 0.5
+  tempo_range: [0.85, 1.15]
+  vtlp_prob: 0.5
+  vtlp_range: [0.9, 1.1]
+  freq_masks: 2
+  freq_mask_width: 12
+  time_masks: 2
+  time_mask_ratio: 0.1

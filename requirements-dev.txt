@@ -1,0 +1,7 @@
+-r requirements.txt
+sounddevice>=0.4
+pytest>=7.4
+ruff>=0.5
+nbformat>=5.9
+nbclient>=0.5
+ipykernel>=6.0

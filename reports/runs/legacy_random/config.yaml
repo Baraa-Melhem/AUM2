@@ -1,0 +1,123 @@
+name: legacy_random
+seed: 0
+output_dir: runs
+folds: []
+data:
+  raw_dir: data/raw
+  cache_dir: data/cache
+  corpora:
+  - cremad
+  - ravdess
+  - tess
+  - savee
+  classes:
+  - angry
+  - disgust
+  - fear
+  - happy
+  - neutral
+  - sad
+  sample_rate: 16000
+  trim_top_db: 35.0
+  trim_margin_ms: 100.0
+  target_dbfs: -25.0
+  max_seconds: 8.0
+  min_seconds: 0.3
+split:
+  protocol: random
+  test_fraction: 0.2
+  n_folds: 5
+  seed: 1337
+frontend:
+  n_mels: 80
+  n_fft: 400
+  win_length: 400
+  hop_length: 160
+  f_min: 20.0
+  f_max: 8000.0
+augment:
+  enabled: true
+  crop_seconds: 3.0
+  gain_db: 6.0
+  noise_prob: 0.5
+  snr_db:
+  - 10.0
+  - 35.0
+  tempo_prob: 0.5
+  tempo_range:
+  - 0.85
+  - 1.15
+  vtlp_prob: 0.5
+  vtlp_range:
+  - 0.9
+  - 1.1
+  freq_masks: 2
+  freq_mask_width: 12
+  time_masks: 2
+  time_mask_ratio: 0.1
+model:
+  name: legacy_cascade
+  crnn:
+    channels:
+    - 32
+    - 64
+    - 128
+    - 256
+    time_pool:
+    - 2
+    - 2
+    - 2
+    - 1
+    proj_dim: 256
+    gru_hidden: 128
+    gru_layers: 2
+    attention_dim: 128
+    dropout: 0.3
+  ssl:
+    backbone: microsoft/wavlm-large
+    batch_seconds: 64.0
+    hidden_dim: 256
+    dropout: 0.3
+    input_dropout: 0.1
+  handcrafted:
+    classifier: logreg
+    n_mfcc: 40
+    logreg_c: 0.05
+    lgbm_estimators: 800
+    lgbm_learning_rate: 0.03
+    lgbm_num_leaves: 31
+  legacy:
+    n_mels: 128
+    n_fft: 2048
+    hop_length: 512
+    image_size: 128
+    epochs:
+    - 10
+    - 7
+    - 10
+    - 10
+    - 10
+    batch_sizes:
+    - 32
+    - 35
+    - 25
+    - 25
+    - 25
+    learning_rate: 0.001
+train:
+  batch_size: 64
+  eval_batch_size: 64
+  epochs: 60
+  learning_rate: 0.002
+  weight_decay: 0.05
+  warmup_epochs: 2.0
+  loss: ce
+  label_smoothing: 0.1
+  focal_gamma: 2.0
+  class_weighting: balanced
+  grad_clip: 5.0
+  ema_decay: 0.999
+  patience: 0
+  amp: true
+  device: cpu
+  deterministic: false

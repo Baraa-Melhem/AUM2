@@ -1,0 +1,7 @@
+# The 2023 method under the 2023 protocol (random utterance-level split, speakers shared between
+# training and test). Only exists to measure how much that protocol inflates the score.
+base: legacy.yaml
+name: legacy_random
+
+split:
+  protocol: random

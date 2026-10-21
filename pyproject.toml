@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aum2"
+version = "2.0.0"
+description = "Speaker-independent speech emotion recognition: WavLM and log-mel CRNN models evaluated leak-free on CREMA-D, RAVDESS, TESS and SAVEE."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-2.0-only" }
+authors = [{ name = "Baraa Melhem" }]
+keywords = ["speech-emotion-recognition", "audio", "deep-learning", "wavlm", "pytorch", "affective-computing"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "torch>=2.1",
+    "soundfile>=0.12",
+    "soxr>=0.3",
+    "librosa>=0.10",
+    "scikit-learn>=1.3",
+    "lightgbm>=4.0",
+    "transformers>=4.40",
+    "safetensors>=0.4",
+    "joblib>=1.3",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+    "pyarrow>=14",  # reads the SAVEE parquet mirror in download_data.py
+    "tqdm>=4.65",
+    "tabulate>=0.9",  # markdown tables in tune.py
+]
+
+[project.optional-dependencies]
+mic = ["sounddevice>=0.4"]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.5",
+    "nbformat>=5.9",
+    "nbclient>=0.5",
+    "ipykernel>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Baraa-Melhem/AUM2"
+"Original Kaggle notebook" = "https://www.kaggle.com/code/baraamelhem/audio-emotional-classification"
+
+[project.scripts]
+aum2-download = "aum2.cli.download:main"
+aum2-train = "aum2.cli.train:main"
+aum2-evaluate = "aum2.cli.evaluate:main"
+aum2-predict = "aum2.cli.predict:main"
+aum2-tune = "aum2.cli.tune:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["legacy"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]  # en dashes and Greek letters in prose are intentional
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402"]  # the first cell puts src/ on sys.path before importing aum2
+
+[tool.ruff.lint.isort]
+known-first-party = ["aum2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]

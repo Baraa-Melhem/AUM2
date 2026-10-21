@@ -1,0 +1,8 @@
+# Same head as wavlm.yaml on a second, differently pre-trained backbone (HuBERT-Large, 60 k h of
+# Libri-Light). Used as an ensemble member: its errors differ from WavLM's.
+base: wavlm.yaml
+name: hubert
+
+model:
+  ssl:
+    backbone: facebook/hubert-large-ll60k

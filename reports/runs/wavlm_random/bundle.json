@@ -1,0 +1,44 @@
+{
+  "aum2_version": "2.0.0",
+  "family": "ssl_head",
+  "classes": [
+    "angry",
+    "disgust",
+    "fear",
+    "happy",
+    "neutral",
+    "sad"
+  ],
+  "folds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "data": {
+    "raw_dir": "data/raw",
+    "cache_dir": "data/cache",
+    "corpora": [
+      "cremad",
+      "ravdess",
+      "tess",
+      "savee"
+    ],
+    "classes": [
+      "angry",
+      "disgust",
+      "fear",
+      "happy",
+      "neutral",
+      "sad"
+    ],
+    "sample_rate": 16000,
+    "trim_top_db": 35.0,
+    "trim_margin_ms": 100.0,
+    "target_dbfs": -25.0,
+    "max_seconds": 8.0,
+    "min_seconds": 0.3
+  },
+  "corpus_key": "edeb4b803dac3942"
+}
